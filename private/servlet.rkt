@@ -3,17 +3,20 @@
          web-server/servlet-env)
 
 (define (start req)
-  (response/xexpr `(html (head (title "serve-fs"))
-                         ; (body (p "add hints here?"))
-                         )))
+  (response/xexpr `(html (head (title "serve-fs")))))
 
-; (define (start-servlet)
-(define (start-servlet port dir)
+(define (start-servlet params)
+  (define servlet-path "/index.rkt")
+  (define (command-line-mode-info)
+    (displayln (format "http://localhost:~a~a" (hash-ref params #\p) servlet-path))
+    (displayln "Stop this program at any time to terminate the Web Server."))
+
+  (if (hash-ref params #\s) (command-line-mode-info) void)
+
   (serve/servlet start
-                 ; #:port 8080
-                 #:port port
-                 #:servlet-path "/index.rkt"
-                 ; #:extra-files-paths (list (build-path "."))))
-                 #:extra-files-paths (list (build-path dir))))
+                 #:port (hash-ref params #\p)
+                 #:servlet-path servlet-path
+                 #:extra-files-paths (list (build-path (hash-ref params #\d)))
+                 #:command-line? (hash-ref params #\s)))
 
 (provide start-servlet)
