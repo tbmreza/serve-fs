@@ -10,8 +10,13 @@
 (define fs-dir (box "."))
 
 (require net/sendurl)
-(define (open-browser)
-  (send-url (format "http://localhost:~a" (unbox localhost-port))))
+(define (open-browser [flag #f])
+  ; wait until server starts spinning?
+  (if flag (send-url (format "http://localhost:~a" (unbox localhost-port))) (void)))
+
+(define (spin localhost-port fs-dir)
+  ; separate exe?
+  (display (format "~a~a " localhost-port fs-dir)))
 
 (command-line #:program "serve-fs"
               #:once-each ; Each independent, but specified at most once.
@@ -19,11 +24,9 @@
               [("--dir" "-d") dir "Specify directory to serve" (set-box! fs-dir dir)]
               [("--open" "-o")
                "Open one file in a browser, leaving the program running in terminal"
-               (open-browser)]
-              ; #:args ()
-              ; (printf "dir ~a~n" (unbox fs-dir))
-              ; (printf "port: ~a~n" (unbox localhost-port))
-              )
+               (open-browser #t)]
+              #:args ()
+              (spin (unbox localhost-port) (unbox fs-dir)))
 
 ; (module+ test
 ;   ;; Any code in this `test` submodule runs when this file is run using DrRacket
