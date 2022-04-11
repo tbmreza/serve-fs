@@ -18,7 +18,7 @@
               [("--headless" "-s") "Do not open a browser" (set-box! command-line-mode #t)]
               #:args ()
               (start-servlet
-               (hash #\p (unbox localhost-port) #\d (unbox fs-dir) #\s (unbox command-line-mode))))
+               (hash 'port (unbox localhost-port) 'dir (unbox fs-dir) 'headless (unbox command-line-mode))))
 
 ; (module+ test
 ;   ;; Any code in this `test` submodule runs when this file is run using DrRacket
