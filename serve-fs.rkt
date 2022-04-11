@@ -18,6 +18,7 @@
   ; separate exe?
   (display (format "~a~a " localhost-port fs-dir)))
 
+(require "./servlet.rkt")
 (command-line #:program "serve-fs"
               #:once-each ; Each independent, but specified at most once.
               [("--port" "-p") port "Specify port number" (set-box! localhost-port port)]
@@ -25,6 +26,7 @@
               [("--open" "-o")
                "Open one file in a browser, leaving the program running in terminal"
                (open-browser #t)]
+              [("--test") "tes servlet" (start-servlet)]
               #:args ()
               (spin (unbox localhost-port) (unbox fs-dir)))
 
