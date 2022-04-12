@@ -19,11 +19,7 @@ Specify directory to serve
 Do not open a browser
 --help, -h
 Show this help
---
-Do not treat any remaining argument as a switch (at this level)
-
-Multiple single-letter switches can be combined after
-one `-`. For example, `-h-` is the same as `-h --`.
+...
 ```
 
 ## Usage
@@ -43,3 +39,7 @@ The app is installable, but far from finish.
 - [ ] publish package
 - [ ] properly test
 - [ ] ...
+
+## Testing
+
+- [cram](https://github.com/brodie/cram)
