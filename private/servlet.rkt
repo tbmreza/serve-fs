@@ -5,10 +5,12 @@
 (define (start req)
   (response/xexpr `(html (head (title "serve-fs")))))
 
-; TODO
-; (define (handle-ws ...))
-(define filenames
-  (filter file-exists? (map path->string (directory-list))))
+(define (handle-ws name)
+  (string-replace name " " "%20"))
+
+(define (filenames)
+  (define not-folder-names (filter file-exists? (map path->string (directory-list))))
+  (map handle-ws not-folder-names))
 
 ; (require rackunit)
 ; (check-equal? (fmt "gura.jpeg") "http://localhost:5454/gura.jpeg")
@@ -24,7 +26,7 @@
     (format "http://localhost:~a/~a" (hash-ref params 'port) filename))
 
   (define (command-line-mode-info)
-    (map displayln (map fmt filenames))
+    (map displayln (map fmt (filenames)))
     (displayln "\nStop this program at any time to terminate the Web Server."))
 
   (if (hash-ref params 'headless) (command-line-mode-info) void)
