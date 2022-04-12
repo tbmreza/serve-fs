@@ -12,14 +12,7 @@
   (define not-folder-names (filter file-exists? (map path->string (directory-list))))
   (map handle-ws not-folder-names))
 
-; (require rackunit)
-; (check-equal? (fmt "gura.jpeg") "http://localhost:5454/gura.jpeg")
-
-(define mock
-  (hash 'port 5454 'dir "." 'headless #t))
-
-; (define (start-servlet params)
-(define (start-servlet [params mock])
+(define (start-servlet params)
   (define servlet-path "/index.rkt")
 
   (define (fmt filename)
@@ -35,7 +28,6 @@
                  #:port (hash-ref params 'port)
                  #:servlet-path "/"
                  #:extra-files-paths (list (build-path (hash-ref params 'dir)))
-                 #:command-line? (hash-ref params 'headless))
-  )
+                 #:command-line? (hash-ref params 'headless)))
 
 (provide start-servlet)
