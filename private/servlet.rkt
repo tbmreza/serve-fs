@@ -32,4 +32,4 @@
                  #:command-line? (params-headless? params)))
 
 (provide start-servlet
-         params)
+         (contract-out (struct params ((port number?) (dir string?) (headless? boolean?)))))
